@@ -7,8 +7,23 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
-    <ion-list-header>Push</ion-list-header>
+  <ion-list> 
+    <ion-list-header>
+      <ion-label>
+        <b>UserID</b>
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>{{ userID }}</ion-label>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label>
+        <b>Push</b>
+      </ion-label>
+    </ion-list-header>
+
     <ion-item *ngFor="let mensaje of mensajes">
      <ion-label>
       <h3>{{ mensaje.title }}</h3>

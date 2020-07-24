@@ -20,6 +20,7 @@ export class PushService {
     // }
   ];
 
+  userID: string;
   pushListener = new EventEmitter<OSNotificationPayload>(); // Emite un evento
 
   // Inicializarion del OneSignal para los push
@@ -42,6 +43,13 @@ export class PushService {
       console.log('notificacion abierta', noti);
       await this.notificacionrecibida(noti.notification);
     });
+
+    // Obtener id del suspcriptor
+    this.oneSignal.getIds()
+      .then(info => {
+        this.userID = info.userId;
+        console.log(this.userID);
+      });
 
     this.oneSignal.endInit();
   }
@@ -81,6 +89,10 @@ export class PushService {
   async getMensajes() {
     await this.cargarMensajes();
     return [...this.mensajes];
+  }
+
+  getUserID(){
+    return this.userID;
   }
 
 }
