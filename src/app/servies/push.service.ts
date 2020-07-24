@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { OneSignal, OSNotification, OSNotificationPayload } from '@ionic-native/onesignal/ngx';
 import { Storage } from '@ionic/storage';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -36,9 +37,10 @@ export class PushService {
     });
 
     // Se ejecuta cuando la notificacion es abierta
-    this.oneSignal.handleNotificationOpened().subscribe((noti) => {
+    this.oneSignal.handleNotificationOpened().subscribe( async (noti) => {
       // do something when a notification is opened
       console.log('notificacion abierta', noti);
+      await this.notificacionrecibida(noti.notification);
     });
 
     this.oneSignal.endInit();
@@ -61,7 +63,7 @@ export class PushService {
 
     console.log('Estas pasando el emit');
 
-    this.guardarMensaje();
+    await this.guardarMensaje();
   }
 
   guardarMensaje() {
@@ -70,8 +72,10 @@ export class PushService {
   }
 
   async cargarMensajes() {
+    // this.storage.clear();
     this.mensajes = await this.storage.get('mensajes') || [];
     console.log(this.mensajes);
+    return this.mensajes;
   }
 
   async getMensajes() {
