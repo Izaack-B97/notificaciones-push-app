@@ -95,4 +95,10 @@ export class PushService {
     return this.userID;
   }
 
+  // Eliminara todos los mensajes del storage
+  async borrarMensajes(){
+   await this.storage.clear();
+   this.mensajes = [];
+   this.guardarMensaje();
+  }
 }

@@ -25,4 +25,8 @@ export class HomePage implements OnInit {
     this.userID = this.pushService.getUserID();
   }
 
+  async borrarMensajes() {
+    await this.pushService.borrarMensajes();
+    this.mensajes = [];
+  }
 }
